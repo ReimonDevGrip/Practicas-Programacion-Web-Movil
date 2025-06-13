@@ -1,0 +1,7 @@
+{
+  "name": "templateBlanck",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

@@ -1,0 +1,87 @@
+<ion-header [translucent]="true"> </ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="profile-card">
+    <ion-list class="user-profile">
+      <div class="profile-container">
+        <ion-avatar class="photo">
+          <img [src]="photo" alt="Foto de perfil" />
+        </ion-avatar>
+
+        <ion-label class="name">{{ name }}</ion-label>
+        <ion-label class="job-role">{{ jobRole }}</ion-label>
+      </div>
+    </ion-list>
+
+    <div class="divider"></div>
+    <ion-item>
+      <ion-label class="email-title">Email</ion-label>
+      <ion-label class="email">{{ email }}</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label class="notification-title">Notificaciones</ion-label>
+      <ion-toggle class="toggle" slot="end"></ion-toggle>
+    </ion-item>
+
+    <div>
+      <ion-button id="open-modal" expand="block">Editar</ion-button>
+    </div>
+  </div>
+
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cerrar</ion-button>
+          </ion-buttons>
+          <ion-title>Resumen de información</ion-title>
+          <ion-buttons slot="end"> </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-avatar class="photo">
+            <img [src]="photo" alt="Foto de perfil" />
+          </ion-avatar>
+          <ion-button slot="end" (click)="fileInput.click()"
+            >Cambiar avatar</ion-button
+          >
+          <input
+            type="file"
+            #fileInput
+            hidden
+            (change)="onFileSelected($event)"
+            accept="image/*"
+          />
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Nombre:</ion-label>
+          <ion-input
+            slot="end"
+            placeholder="Ingresa tu nombre"
+            [(ngModel)]="name"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Perfil:</ion-label>
+          <ion-input
+            slot="end"
+            placeholder="Ingresa tu perfil"
+            [(ngModel)]="jobRole"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Correo:</ion-label>
+          <ion-input
+            slot="end"
+            placeholder="Ingresa tu correo"
+            [(ngModel)]="email"
+          ></ion-input>
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

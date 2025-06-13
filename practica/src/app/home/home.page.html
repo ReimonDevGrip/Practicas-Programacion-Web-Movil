@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Home
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Home</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <ion-button [routerLink]="['/acerca-de']" routerLinkActive="router-link-active" expand="block" fill="outline">
+      Acerca de...
+    </ion-button>
+    <hr>
+    <hr>
+    <ion-item>
+      <ion-input [(ngModel)]="nombre" placeholder="Nombre"></ion-input>
+    </ion-item>
+    <hr>
+    <ion-item>
+      <ion-input [(ngModel)]="edad" placeholder="Edad"></ion-input>
+    </ion-item>
+    <hr>
+    <hr>
+    <ion-button [routerLink]="['/detalles']" [queryParams]="{ nombre: nombre, edad: edad }"
+      routerLinkActive="router-link-active" expand="block" fill="outline">
+      Detalles
+    </ion-button>
+    <ion-button (click)="irConObj()" expand="true" shape="round" fill="outline" >
+      Detalles Objeto
+    </ion-button>
+  </div>
+</ion-content>
