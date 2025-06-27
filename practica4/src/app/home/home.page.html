@@ -19,9 +19,21 @@
     </ion-toolbar>
   </ion-header>
 
+  @if(getMessages().length > 0) {
   <ion-list>
     @for (message of getMessages(); track message) {
-      <app-message [message]="message"></app-message>
+    <app-message [message]="message"></app-message>
     }
   </ion-list>
+  } @else {
+    <div class="empty-state-container">
+      <ion-icon name="mail-open-outline"  class="empty-icon"></ion-icon>
+      <p>Your inbox is Empty</p>
+    </div>
+  }
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button [routerLink]="`/create-message`">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

@@ -1,0 +1,83 @@
+import { Component, inject, Inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  IonContent, IonHeader, IonToolbar, IonTitle,
+  IonItem, IonLabel, IonInput, IonTextarea,
+  IonButton, IonFooter, IonButtons, IonBackButton, IonNote, IonIcon
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { documentTextOutline, sendOutline } from 'ionicons/icons';
+import { DataService } from '../services/data.service';
+
+@Component({
+  selector: 'create-message',
+  standalone: true,
+  templateUrl: './create-message.page.html',
+  styleUrls: ['./create-message.page.scss'],
+  imports: [IonIcon, IonNote,
+    CommonModule, ReactiveFormsModule,
+    IonContent, IonHeader, IonToolbar, IonTitle,
+    IonItem, IonLabel, IonInput, IonTextarea,
+    IonButton, IonFooter, IonButtons, IonBackButton,
+    MatFormFieldModule, MatInputModule,
+    MatSelectModule, MatCheckboxModule,
+    MatButtonModule
+  ]
+})
+export class CreateMessage implements OnInit {
+  private data = inject(DataService);
+  messageForm!: FormGroup;
+  submitted = false;
+  isWriting = {
+    email: false,
+    subject: false,
+    message: false
+  };
+
+  constructor(private fb: FormBuilder) {
+    addIcons({ sendOutline, documentTextOutline })
+  }
+
+  ngOnInit() {
+    this.messageForm = this.fb.group({
+      email: ['', Validators.required],
+      subject: ['', Validators.required],
+      message: ['', Validators.required]
+    });
+    // Si quieres valor inicial:
+    // this.messageForm.controls['recipient'].setValue('email@domain.com');
+  }
+
+  isInvalid(ctrl: string): boolean {
+    const c = this.messageForm.get(ctrl)!;
+    return c.invalid && (c.touched || this.submitted);
+  }
+
+  isValid(ctrl: string): boolean {
+    const c = this.messageForm.get(ctrl)!;
+    return c.valid && (c.dirty || c.touched);
+  }
+
+  showError(ctrl: string): boolean {
+    return this.isInvalid(ctrl);
+  }
+
+  sendMessage(formDirective: any) {
+    this.submitted = true;
+
+    if (this.messageForm.invalid) return;
+
+    this.data.sendMessage(this.messageForm.value);
+    console.log('Message sent:', this.messageForm.value);
+
+    formDirective.resetForm();
+    this.messageForm.reset();
+    this.submitted = false;
+  }
+}

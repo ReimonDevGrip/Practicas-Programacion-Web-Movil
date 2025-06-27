@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create Message</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="messageForm" (ngSubmit)="sendMessage(formDirective)" #formDirective="ngForm" novalidate>
+    <!-- Recipient (editable) -->
+    <ion-item fill="outline">
+      <ion-label position="stacked"
+        [color]="messageForm.controls['email'].invalid && messageForm.controls['email'].dirty ? 'danger' : (isWriting.email ? 'success' : '')">Sent
+        To</ion-label>
+      <ion-icon name="send-outline" slot="start"></ion-icon>
+      <ion-input formControlName="email" type="email" placeholder="email@domain.com" (ionFocus)="isWriting.email= true"
+        (ionBlur)="isWriting.email = false"></ion-input>
+      @if(messageForm.controls['email'].invalid && messageForm.controls['email'].dirty) {
+      <ion-note color="danger">This field is required</ion-note>
+      }
+    </ion-item>
+
+    <!-- Subject -->
+    <ion-item fill="outline">
+      <ion-label position="stacked"
+        [color]="messageForm.controls['subject'].invalid && messageForm.controls['subject'].dirty ? 'danger' : (isWriting.subject ? 'success' : '')">Subject</ion-label>
+      <ion-icon name="document-text-outline" slot="start"></ion-icon>
+      <ion-input formControlName="subject" type="text" placeholder="Subject" (ionFocus)="isWriting.subject= true"
+        (ionBlur)="isWriting.subject= false"></ion-input>
+      @if(messageForm.controls['subject'].invalid && messageForm.controls['subject'].dirty) {
+      <ion-note color="danger">This field is required</ion-note>
+      }
+    </ion-item>
+
+    <!-- Message -->
+    <ion-item fill="outline">
+      <ion-label position="stacked"
+        [color]="messageForm.controls['message'].invalid && messageForm.controls['message'].dirty ? 'danger' : (isWriting.message ? 'success' : '')">Message</ion-label>
+      <ion-textarea (ionFocus)="isWriting.message= true" (ionBlur)="isWriting.message= false"formControlName="message"
+        placeholder="Enter message..." autoGrow clearOnEdit>
+      </ion-textarea>
+      @if(messageForm.controls['message'].invalid && messageForm.controls['message'].dirty) {
+      <ion-note color="danger">This field is required</ion-note>
+      }
+    </ion-item>
+
+    <ion-footer>
+      <ion-button expand="full" type="submit" [disabled]="messageForm.invalid">
+        SEND MESSAGE
+      </ion-button>
+    </ion-footer>
+  </form>
+</ion-content>

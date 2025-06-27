@@ -15,5 +15,9 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path: 'create-message',
+    loadComponent: () => import('./create-message/create-message.page').then( m => m.CreateMessage)
+  },
 ];
 
