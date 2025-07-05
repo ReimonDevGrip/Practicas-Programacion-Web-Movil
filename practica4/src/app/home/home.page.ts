@@ -3,12 +3,13 @@ import { Component, inject } from '@angular/core';
 import { RefresherCustomEvent, IonHeader, IonToolbar, IonTitle, IonContent, IonRefresher, IonRefresherContent, IonList, IonFab, IonFabButton, IonIcon } from '@ionic/angular/standalone';
 import { MessageComponent } from '../message/message.component';
 
-import { DataService } from '../services/data.service';
+import { DataService } from '../services/data-service/data.service';
 import { Message } from '../models/message.model';
 
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
 import { RouterLink } from '@angular/router';
+import { UserService } from '../services/users/users.service';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,8 @@ import { RouterLink } from '@angular/router';
 })
 export class HomePage {
   private data = inject(DataService);
+  private users = inject(UserService);
+  
   constructor() {
     addIcons({ add });
   }

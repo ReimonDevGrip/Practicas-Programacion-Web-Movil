@@ -1,4 +1,4 @@
-import { Component, inject, Inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -9,11 +9,12 @@ import { MatButtonModule } from '@angular/material/button';
 import {
   IonContent, IonHeader, IonToolbar, IonTitle,
   IonItem, IonLabel, IonInput, IonTextarea,
-  IonButton, IonFooter, IonButtons, IonBackButton, IonNote, IonIcon
+  IonButton, IonFooter, IonButtons, IonBackButton, IonNote, IonIcon, ModalController
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { documentTextOutline, sendOutline } from 'ionicons/icons';
-import { DataService } from '../services/data.service';
+import { DataService } from '../services/data-service/data.service';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'create-message',
@@ -32,8 +33,10 @@ import { DataService } from '../services/data.service';
 })
 export class CreateMessage implements OnInit {
   private data = inject(DataService);
+  private modalCtrl = inject(ModalController);
   messageForm!: FormGroup;
   submitted = false;
+  searchActive = false;
   isWriting = {
     email: false,
     subject: false,
@@ -52,6 +55,14 @@ export class CreateMessage implements OnInit {
     });
     // Si quieres valor inicial:
     // this.messageForm.controls['recipient'].setValue('email@domain.com');
+  }
+
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: ModalComponent,
+    });
+    modal.present();
+
   }
 
   isInvalid(ctrl: string): boolean {
@@ -80,4 +91,5 @@ export class CreateMessage implements OnInit {
     this.messageForm.reset();
     this.submitted = false;
   }
+
 }

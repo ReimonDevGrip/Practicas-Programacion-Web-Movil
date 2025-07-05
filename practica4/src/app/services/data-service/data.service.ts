@@ -1,5 +1,5 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
-import { Message } from '../models/message.model';
+import { Message } from '../../models/message.model';
 import { collectionData, CollectionReference, Firestore } from '@angular/fire/firestore';
 import { addDoc, collection, doc, DocumentData, updateDoc } from 'firebase/firestore';
 import { Observable, Subject } from 'rxjs';

@@ -10,20 +10,24 @@
 <ion-content class="ion-padding">
   <form [formGroup]="messageForm" (ngSubmit)="sendMessage(formDirective)" #formDirective="ngForm" novalidate>
     <!-- Recipient (editable) -->
-    <ion-item fill="outline">
+    <ion-item button fill="outline" (click)="openModal()">
+
       <ion-label position="stacked"
         [color]="messageForm.controls['email'].invalid && messageForm.controls['email'].dirty ? 'danger' : (isWriting.email ? 'success' : '')">Sent
         To</ion-label>
+
       <ion-icon name="send-outline" slot="start"></ion-icon>
+
       <ion-input formControlName="email" type="email" placeholder="email@domain.com" (ionFocus)="isWriting.email= true"
         (ionBlur)="isWriting.email = false"></ion-input>
+      
       @if(messageForm.controls['email'].invalid && messageForm.controls['email'].dirty) {
       <ion-note color="danger">This field is required</ion-note>
       }
     </ion-item>
 
     <!-- Subject -->
-    <ion-item fill="outline">
+    <ion-item button fill="outline">
       <ion-label position="stacked"
         [color]="messageForm.controls['subject'].invalid && messageForm.controls['subject'].dirty ? 'danger' : (isWriting.subject ? 'success' : '')">Subject</ion-label>
       <ion-icon name="document-text-outline" slot="start"></ion-icon>
@@ -35,10 +39,10 @@
     </ion-item>
 
     <!-- Message -->
-    <ion-item fill="outline">
+    <ion-item button fill="outline">
       <ion-label position="stacked"
         [color]="messageForm.controls['message'].invalid && messageForm.controls['message'].dirty ? 'danger' : (isWriting.message ? 'success' : '')">Message</ion-label>
-      <ion-textarea (ionFocus)="isWriting.message= true" (ionBlur)="isWriting.message= false"formControlName="message"
+      <ion-textarea (ionFocus)="isWriting.message= true" (ionBlur)="isWriting.message= false" formControlName="message"
         placeholder="Enter message..." autoGrow clearOnEdit>
       </ion-textarea>
       @if(messageForm.controls['message'].invalid && messageForm.controls['message'].dirty) {

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Platform, IonHeader, IonToolbar, IonButtons, IonBackButton, IonContent, IonItem, IonIcon, IonLabel, IonNote } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { personCircle } from 'ionicons/icons';
-import { DataService } from '../services/data.service';
+import { DataService } from '../services/data-service/data.service';
 import { Message } from '../models/message.model';
 import { Observable } from 'rxjs';
 

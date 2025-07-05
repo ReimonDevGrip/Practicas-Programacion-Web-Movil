@@ -5,7 +5,7 @@ import { Platform, IonItem, IonLabel, IonNote, IonIcon } from '@ionic/angular/st
 import { addIcons } from 'ionicons';
 import { chevronForward } from 'ionicons/icons';
 import { Message } from '../models/message.model';
-import { DataService } from '../services/data.service';
+import { DataService } from '../services/data-service/data.service';
 
 
 @Component({
