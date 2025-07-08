@@ -18,7 +18,7 @@
 
       <ion-icon name="send-outline" slot="start"></ion-icon>
 
-      <ion-input formControlName="email" type="email" placeholder="email@domain.com" (ionFocus)="isWriting.email= true"
+      <ion-input [value]="nameOrEmail" formControlName="email" type="email" placeholder="email@domain.com" (ionFocus)="isWriting.email= true"
         (ionBlur)="isWriting.email = false"></ion-input>
       
       @if(messageForm.controls['email'].invalid && messageForm.controls['email'].dirty) {

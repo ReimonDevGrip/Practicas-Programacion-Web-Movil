@@ -15,6 +15,7 @@ import { addIcons } from 'ionicons';
 import { documentTextOutline, sendOutline } from 'ionicons/icons';
 import { DataService } from '../services/data-service/data.service';
 import { ModalComponent } from '../modal/modal.component';
+import { User } from '../models/users.model';
 
 @Component({
   selector: 'create-message',
@@ -34,6 +35,7 @@ import { ModalComponent } from '../modal/modal.component';
 export class CreateMessage implements OnInit {
   private data = inject(DataService);
   private modalCtrl = inject(ModalController);
+  nameOrEmail: string = '';
   messageForm!: FormGroup;
   submitted = false;
   searchActive = false;
@@ -61,7 +63,15 @@ export class CreateMessage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: ModalComponent,
     });
+    
     modal.present();
+    const { data } = await modal.onDidDismiss();
+    
+    if (data?.user as User) {
+      this.nameOrEmail = data.user.name;
+    } else {
+      this.nameOrEmail = data.name
+    }
 
   }
 
@@ -85,6 +95,7 @@ export class CreateMessage implements OnInit {
     if (this.messageForm.invalid) return;
 
     this.data.sendMessage(this.messageForm.value);
+
     console.log('Message sent:', this.messageForm.value);
 
     formDirective.resetForm();

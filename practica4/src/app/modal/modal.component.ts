@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SearchComponent } from '../search/search.component';
 
@@ -11,6 +11,7 @@ import {
   IonToolbar,
   ModalController,
 } from '@ionic/angular/standalone';
+import { User } from '../models/users.model';
 
 @Component({
   selector: 'modal',
@@ -18,15 +19,28 @@ import {
   imports: [FormsModule, IonButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, SearchComponent],
 })
 export class ModalComponent {
-  name!: string;
 
-  constructor(private modalCtrl: ModalController) {}
+
+
+  constructor(private modalCtrl: ModalController) { }
 
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
 
-  confirm() {
-    return this.modalCtrl.dismiss(this.name, 'confirm');
+  confirm(name?: string | null, user?: User) {
+    if (name)
+      return this.modalCtrl.dismiss({name : name});
+    else
+      return this.modalCtrl.dismiss({user : user});
+
+  }
+
+  getName(name: string) {
+    this.confirm(name);
+  }
+
+  getUserObject(user: User) {
+    this.confirm(null, user);
   }
 }

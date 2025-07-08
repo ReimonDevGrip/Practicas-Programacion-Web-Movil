@@ -10,5 +10,5 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <search></search>
+  <search (name)="getName($event)" (userObject)="getUserObject($event)" ></search>
 </ion-content>

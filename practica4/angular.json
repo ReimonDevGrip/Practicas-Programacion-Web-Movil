@@ -137,7 +137,10 @@
     }
   },
   "cli": {
-    "schematicCollections": ["@ionic/angular-toolkit"]
+    "schematicCollections": [
+      "@ionic/angular-toolkit"
+    ],
+    "analytics": false
   },
   "schematics": {
     "@ionic/angular-toolkit:component": {
@@ -157,9 +160,6 @@
     },
     "@schematics/angular:directive": {
       "type": "directive"
-    },
-    "@schematics/angular:service": {
-      "type": "service"
     },
     "@schematics/angular:guard": {
       "typeSeparator": "."

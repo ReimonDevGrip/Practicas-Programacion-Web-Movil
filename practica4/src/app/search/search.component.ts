@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { IonItem, IonLabel, IonList, IonSearchbar } from '@ionic/angular/standalone';
 import { UserService } from '../services/users/users.service';
 import { User } from '../models/users.model';
@@ -10,16 +10,18 @@ import { User } from '../models/users.model';
   imports: [IonItem, IonLabel, IonList, IonSearchbar],
 })
 export class SearchComponent implements OnInit {
-  
-  // private users = inject(UserService)
+  @Output('userObject') userSelected = new EventEmitter<User>();
+  @Output('name') nameValue = new EventEmitter<string>();
+  public selectedName: string = '';
+  private users = inject(UserService)
   public data = this.getUsers();
   public results = [...this.data];
+  public selecUser: User | null = null;
 
-  constructor(private users: UserService) { 
-    console.log(this.users.getUsers())
+  constructor() {
   }
+
   ngOnInit() {
-    console.log(this.data)
   }
 
   handleInput(event: Event) {
@@ -29,7 +31,17 @@ export class SearchComponent implements OnInit {
   }
 
   getUsers(): User[] {
-    console.log(this.users.getUsers())
     return this.users.getUsers();
+  }
+
+  getSuggestName(user: User) {
+    this.selecUser = user;
+    this.selectedName = user.name;
+  }
+
+  sendInput() {
+    if (this.selecUser)
+      this.userSelected.emit(this.selecUser)
+    this.nameValue.emit(this.selectedName);
   }
 }
