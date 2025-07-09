@@ -39,6 +39,7 @@ export class CreateMessage implements OnInit {
   messageForm!: FormGroup;
   submitted = false;
   searchActive = false;
+  userSelected: User | null = null;
   isWriting = {
     email: false,
     subject: false,
@@ -55,24 +56,23 @@ export class CreateMessage implements OnInit {
       subject: ['', Validators.required],
       message: ['', Validators.required]
     });
-    // Si quieres valor inicial:
-    // this.messageForm.controls['recipient'].setValue('email@domain.com');
   }
 
   async openModal() {
     const modal = await this.modalCtrl.create({
       component: ModalComponent,
     });
-    
-    modal.present();
-    const { data } = await modal.onDidDismiss();
-    
-    if (data?.user as User) {
-      this.nameOrEmail = data.user.name;
-    } else {
-      this.nameOrEmail = data.name
-    }
 
+    modal.present();
+    const { data, role } = await modal.onDidDismiss();
+
+    if (role === 'confirm' && data?.user) {
+      const user = data.user as User;
+
+      this.messageForm.patchValue({
+        email: user.name
+      });
+    }
   }
 
   isInvalid(ctrl: string): boolean {
@@ -94,13 +94,14 @@ export class CreateMessage implements OnInit {
 
     if (this.messageForm.invalid) return;
 
-    this.data.sendMessage(this.messageForm.value);
+    this.data.sendMessage(this.userSelected!, this.messageForm.value);
 
     console.log('Message sent:', this.messageForm.value);
 
     formDirective.resetForm();
     this.messageForm.reset();
     this.submitted = false;
+    this.nameOrEmail = '';
   }
 
 }

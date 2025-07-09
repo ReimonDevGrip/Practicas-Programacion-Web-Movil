@@ -1,0 +1,35 @@
+ion-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    height: 77%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+ion-item {
+    width: 300px;
+}
+ion-button {
+    width: 300px;
+    margin-top: 10px;
+}
+
+ion-footer {
+    display: fllex;
+    text-align: center;
+    text-justify: center;
+    margin-bottom: 15px;
+}
+
+ion-text {
+    background-color: #f9f9f9;
+    color: #545454;
+    border-radius: 5px;
+    padding: 10px;
+}

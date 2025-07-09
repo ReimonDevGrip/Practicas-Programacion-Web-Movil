@@ -12,3 +12,50 @@
     color: var(--ion-color-medium);
     margin-bottom: 1rem;
 }
+
+ion-toolbar {
+  --background: #1e1e1e;
+  color: white;
+
+  ion-title {
+    font-weight: bold;
+  }
+
+  .custom-chip {
+    background-color: #3a3a3a;
+    color: white;
+    border-radius: 20px;
+    height: 32px;
+
+    ion-avatar {
+      width: 24px;
+      height: 24px;
+      background-color: #1a1a1a;
+      margin-right: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-icon {
+      font-size: 16px;
+      color: #c1c1c1;
+    }
+
+    ion-label {
+      font-size: 14px;
+      padding: 0 4px;
+    }
+
+    .close-icon {
+      background-color: #5a5a5a;
+      color: white;
+      border-radius: 50%;
+      padding: 2px;
+      width: 20px;
+      height: 20px;
+      font-size: 14px;
+      margin-left: 6px;
+    }
+  }
+}

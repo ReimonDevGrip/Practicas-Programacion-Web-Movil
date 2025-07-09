@@ -1,4 +1,5 @@
-<ion-searchbar [value]="selectedName" [debounce]="1000" (change)="sendInput()" (ionInput)="handleInput($event)"></ion-searchbar>
+<ion-searchbar [value]="selectedName" [debounce]="1000" (change)="sendInput()"
+  (ionInput)="handleInput($event)"></ion-searchbar>
 <ion-list>
   @for (result of results; track result) {
   <ion-item>
@@ -6,4 +7,3 @@
   </ion-item>
   }
 </ion-list>
-

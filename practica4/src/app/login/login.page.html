@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="login-container">
+    <ion-item lines="none">
+      <ion-input label="Nombre de usuario" labelPlacement="stacked" [(ngModel)]="userId" (ionInput)="onInputChange()">
+      </ion-input>
+    </ion-item>
+    <ion-button expand="block" (click)="onLogin()">
+      ENTRAR
+    </ion-button>
+  </div>
+</ion-content>
+
+<ion-footer>
+  @if (showError) {
+  <ion-text>
+    The specified user does not exist
+  </ion-text>
+  }
+</ion-footer>

@@ -2,7 +2,11 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: 'home',
+    path: 'login',
+    loadComponent: () => import('./login/login.page').then((m) => m.LoginPage),
+  },
+  {
+    path: 'home/:userId',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
   },
   {
@@ -11,13 +15,18 @@ export const routes: Routes = [
       import('./view-message/view-message.page').then((m) => m.ViewMessagePage),
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
+    path: 'create-message',
+    loadComponent: () => import('./create-message/create-message.page').then(m => m.CreateMessage)
   },
   {
-    path: 'create-message',
-    loadComponent: () => import('./create-message/create-message.page').then( m => m.CreateMessage)
+    path: 'login',
+    loadComponent: () => import('./login/login.page').then(m => m.LoginPage)
   },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+
 ];
 

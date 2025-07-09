@@ -3,6 +3,15 @@
     <ion-title>
       Inbox
     </ion-title>
+     <ion-buttons slot="end">
+      <ion-chip class="custom-chip">
+        <ion-avatar>
+          <ion-icon name="person" class="avatar-icon"></ion-icon>
+        </ion-avatar>
+        <ion-label> {{userId}} </ion-label>
+        <ion-icon name="close" class="close-icon" (click)="logout()"></ion-icon>
+      </ion-chip>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

@@ -19,8 +19,7 @@ import { User } from '../models/users.model';
   imports: [FormsModule, IonButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, SearchComponent],
 })
 export class ModalComponent {
-
-
+  userSelect: User | undefined = undefined;
 
   constructor(private modalCtrl: ModalController) { }
 
@@ -28,19 +27,14 @@ export class ModalComponent {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
 
-  confirm(name?: string | null, user?: User) {
-    if (name)
-      return this.modalCtrl.dismiss({name : name});
-    else
-      return this.modalCtrl.dismiss({user : user});
-
-  }
-
-  getName(name: string) {
-    this.confirm(name);
+  confirm(user?: User) {
+    console.log(user)
+    return user
+      ? this.modalCtrl.dismiss({ user: user }, 'confirm')
+      : this.modalCtrl.dismiss('', 'cancel')
   }
 
   getUserObject(user: User) {
-    this.confirm(null, user);
+   this.userSelect = user;
   }
 }

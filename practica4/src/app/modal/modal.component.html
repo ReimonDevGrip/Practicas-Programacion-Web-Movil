@@ -5,10 +5,10 @@
     </ion-buttons>
     <ion-title>Welcome</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+      <ion-button (click)="confirm(userSelect)" [strong]="true">Confirm</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <search (name)="getName($event)" (userObject)="getUserObject($event)" ></search>
+  <search (userObject)="getUserObject($event)" ></search>
 </ion-content>
