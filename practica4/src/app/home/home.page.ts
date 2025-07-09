@@ -9,6 +9,8 @@ import { Message } from '../models/message.model';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
+import { LoginService } from '../services/login-service/login.service';
+import { User } from '../models/users.model';
 
 @Component({
   selector: 'app-home',
@@ -17,24 +19,19 @@ import { RouterLink, Router, ActivatedRoute } from '@angular/router';
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonRefresher, IonRefresherContent, IonList, MessageComponent, IonFab, IonFabButton, IonIcon, RouterLink, IonButtons, IonChip, IonAvatar, IonLabel],
 })
 export class HomePage implements OnInit {
-
-  private router = inject(Router)
-  private route = inject(ActivatedRoute)
+  private loginService = inject(LoginService);
+  private router = inject(Router);
   private data = inject(DataService);
   private alertController = inject(AlertController);
-
-  userId: string | null = null;
+  public currentUser: User | null = null;
 
   constructor() {
     addIcons({ add });
   }
 
   ngOnInit() {
-    this.userId = this.route.snapshot.paramMap.get('userId');
-
-    if (this.userId) {
-      this.data.setUserId(this.userId);
-    }
+    this.currentUser = this.loginService.getCurrentUser();
+    this.data.setUserId(this.currentUser!.email);
   }
 
   refresh(ev: any) {

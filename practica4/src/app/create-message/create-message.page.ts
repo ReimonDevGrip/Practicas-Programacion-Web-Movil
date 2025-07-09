@@ -67,10 +67,10 @@ export class CreateMessage implements OnInit {
     const { data, role } = await modal.onDidDismiss();
 
     if (role === 'confirm' && data?.user) {
-      const user = data.user as User;
+      this.userSelected = data.user as User;
 
       this.messageForm.patchValue({
-        email: user.name
+        email: this.userSelected.name
       });
     }
   }
@@ -94,6 +94,7 @@ export class CreateMessage implements OnInit {
 
     if (this.messageForm.invalid) return;
 
+    console.log(this.userSelected)
     this.data.sendMessage(this.userSelected!, this.messageForm.value);
 
     console.log('Message sent:', this.messageForm.value);

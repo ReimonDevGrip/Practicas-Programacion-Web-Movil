@@ -14,6 +14,7 @@ import {
   IonFooter
 } from '@ionic/angular/standalone';
 import { UserService } from '../services/users/users.service';
+import { LoginService } from '../services/login-service/login.service';
 
 @Component({
   selector: 'app-login',
@@ -35,6 +36,7 @@ import { UserService } from '../services/users/users.service';
 })
 export class LoginPage implements OnInit {
   private userService = inject(UserService);
+  private loginService = inject(LoginService);
   private router = inject(Router);
 
   userId: string = '';
@@ -50,17 +52,17 @@ export class LoginPage implements OnInit {
       return;
     }
 
-    if (this.userService.userExists(this.userId)) {
-      // Usuario existe, navegar a home
-      this.router.navigate(['/home', this.userId]);
+    const user = this.userService.getUserById(this.userId);
+
+    if (user) {
+      this.loginService.login(user);
+      this.router.navigate(['/home']);
     } else {
-      // Usuario no existe, mostrar mensaje de error
       this.showError = true;
     }
   }
 
   onInputChange() {
-    // Ocultar el error cuando el usuario empiece a escribir
     this.showError = false;
   }
 }
