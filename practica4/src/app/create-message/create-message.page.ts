@@ -1,60 +1,99 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field'
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import {
-  IonContent, IonHeader, IonToolbar, IonTitle,
-  IonItem, IonLabel, IonInput, IonTextarea,
-  IonButton, IonFooter, IonButtons, IonBackButton, IonNote, IonIcon, ModalController
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonTextarea,
+  IonButton,
+  IonFooter,
+  IonButtons,
+  IonBackButton,
+  IonNote,
+  IonIcon,
+  IonSpinner,
+  ModalController,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { documentTextOutline, sendOutline } from 'ionicons/icons';
 import { DataService } from '../services/data-service/data.service';
 import { ModalComponent } from '../modal/modal.component';
 import { User } from '../models/users.model';
+import { GeminiService } from '../services/gemini-service/gemini-service.service';
+import { ResponseIA } from '../models/response.model';
 
 @Component({
   selector: 'create-message',
   standalone: true,
   templateUrl: './create-message.page.html',
   styleUrls: ['./create-message.page.scss'],
-  imports: [IonIcon, IonNote,
-    CommonModule, ReactiveFormsModule,
-    IonContent, IonHeader, IonToolbar, IonTitle,
-    IonItem, IonLabel, IonInput, IonTextarea,
-    IonButton, IonFooter, IonButtons, IonBackButton,
-    MatFormFieldModule, MatInputModule,
-    MatSelectModule, MatCheckboxModule,
-    MatButtonModule
-  ]
+  imports: [
+    IonIcon,
+    IonNote,
+    CommonModule,
+    ReactiveFormsModule,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonItem,
+    IonLabel,
+    IonInput,
+    IonTextarea,
+    IonButton,
+    IonFooter,
+    IonButtons,
+    IonBackButton,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    IonToolbar,
+    MatButtonModule,
+    IonSpinner
+  ],
 })
 export class CreateMessage implements OnInit {
   private data = inject(DataService);
   private modalCtrl = inject(ModalController);
+  private geminiService = inject(GeminiService);
+
   nameOrEmail: string = '';
   messageForm!: FormGroup;
   submitted = false;
   searchActive = false;
+  isEnchanting = false;
   userSelected: User | null = null;
   isWriting = {
     email: false,
     subject: false,
-    message: false
+    message: false,
   };
 
   constructor(private fb: FormBuilder) {
-    addIcons({ sendOutline, documentTextOutline })
+    addIcons({ sendOutline, documentTextOutline });
   }
 
   ngOnInit() {
     this.messageForm = this.fb.group({
       email: ['', Validators.required],
       subject: ['', Validators.required],
-      message: ['', Validators.required]
+      message: ['', Validators.required],
     });
   }
 
@@ -70,7 +109,7 @@ export class CreateMessage implements OnInit {
       this.userSelected = data.user as User;
 
       this.messageForm.patchValue({
-        email: this.userSelected.name
+        email: this.userSelected.name,
       });
     }
   }
@@ -94,7 +133,7 @@ export class CreateMessage implements OnInit {
 
     if (this.messageForm.invalid) return;
 
-    console.log(this.userSelected)
+    console.log(this.userSelected);
     this.data.sendMessage(this.userSelected!, this.messageForm.value);
 
     console.log('Message sent:', this.messageForm.value);
@@ -105,4 +144,28 @@ export class CreateMessage implements OnInit {
     this.nameOrEmail = '';
   }
 
+  async enchantMessage() {
+    try {
+      const currentMessage = this.messageForm.get('message')?.value;
+      
+      if (!currentMessage?.trim()) {
+        console.log('No hay mensaje para mejorar');
+        return;
+      }
+
+      this.isEnchanting = true; // Activar estado de carga
+      
+      const prompt = `Mejora este mensaje, para que suene de manera elegante, si tiene groserias quitaselas y redactalo de forma el mensaje este redactado de forma elegante: "${currentMessage}"`;
+      
+      const response: ResponseIA = await this.geminiService.getResponse(prompt);
+      console.log(response.response);
+      
+      this.messageForm.get('message')?.setValue(response.response);
+      
+    } catch (error) {
+      console.error('Error al mejorar el mensaje:', error);
+    } finally {
+      this.isEnchanting = false; // Desactivar estado de carga siempre
+    }
+  }
 }

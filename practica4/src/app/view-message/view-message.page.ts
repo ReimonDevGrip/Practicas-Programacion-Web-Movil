@@ -5,8 +5,6 @@ import { Platform, IonHeader, IonToolbar, IonButtons, IonBackButton, IonContent,
 import { addIcons } from 'ionicons';
 import { personCircle } from 'ionicons/icons';
 import { DataService } from '../services/data-service/data.service';
-import { Message } from '../models/message.model';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-view-message',
@@ -38,7 +36,6 @@ export class ViewMessagePage implements OnInit {
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.paramMap.get('id') as string;
-    // this.message = this.data.getMessageById(parseInt(id, 10));
     this.messageId = id;
   }
 

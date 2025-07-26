@@ -7,6 +7,7 @@ import { provideFirestore, getFirestore} from '@angular/fire/firestore';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { firebaseConfig } from './environments/firebase';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -14,6 +15,7 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideFirestore(() => getFirestore()) 
+    provideFirestore(() => getFirestore()),
+    provideHttpClient(withFetch())
   ],
 });
