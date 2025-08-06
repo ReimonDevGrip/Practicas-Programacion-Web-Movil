@@ -30,6 +30,7 @@ import {
   ModalController,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
+import { Camera, CameraResultType} from '@capacitor/camera';
 import { documentTextOutline, sendOutline } from 'ionicons/icons';
 import { DataService } from '../services/data-service/data.service';
 import { ModalComponent } from '../modal/modal.component';
@@ -167,5 +168,14 @@ export class CreateMessage implements OnInit {
     } finally {
       this.isEnchanting = false; // Desactivar estado de carga siempre
     }
+  }
+
+  async takePhoto() {
+    const image = await Camera.getPhoto({
+      quality: 60,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl
+    })
+    console.log(image);
   }
 }
