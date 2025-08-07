@@ -1,0 +1,11 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start">Viewer</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="white" (click)="cancel()"><ion-icon size="large" name="close"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <img [src]="safeImageUrl" alt="image">
+</ion-content>

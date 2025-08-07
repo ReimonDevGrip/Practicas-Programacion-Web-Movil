@@ -79,6 +79,9 @@
       <ion-note color="danger">This field is required</ion-note>
       }
     </ion-item>
+    @if (dataUrl) {
+      <show-image imageUrl=" {{dataUrl}} " [withClose]="true" (removed)="dataUrl = ''" ></show-image>
+    }
   </form>
 </ion-content>
 <ion-footer>
@@ -95,20 +98,20 @@
           slot="start"
         ></ion-spinner>
 
-        <ion-icon name="sparkles-outline"></ion-icon>
+        <ion-icon name="sparkles"></ion-icon>
       </ion-button>
+      <ion-button type="submit" expand="block" (click)="takePhoto()"><ion-icon name="camera"></ion-icon></ion-button>
+
     </ion-buttons>
     <ion-buttons slot="start">
       <ion-button
+        color="primary"
         fill="solid"
-        shape="round"
         expand="full"
         (click)="sendMessage(formDirective)"
-        [disabled]="messageForm.invalid"
       >
         <ion-icon name="send-outline"></ion-icon>SEND
       </ion-button>
-      <ion-button type="submit" expand="block" (click)="takePhoto()">FOTOS</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>

@@ -28,6 +28,7 @@ import {
   IonIcon,
   IonSpinner,
   ModalController,
+  LoadingController
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { Camera, CameraResultType} from '@capacitor/camera';
@@ -37,6 +38,8 @@ import { ModalComponent } from '../modal/modal.component';
 import { User } from '../models/users.model';
 import { GeminiService } from '../services/gemini-service/gemini-service.service';
 import { ResponseIA } from '../models/response.model';
+import { StorageService } from '../services/storage/storage.service';
+import { ShowImageComponent } from '../show-image/show-image.component';
 
 @Component({
   selector: 'create-message',
@@ -66,13 +69,16 @@ import { ResponseIA } from '../models/response.model';
     MatCheckboxModule,
     IonToolbar,
     MatButtonModule,
-    IonSpinner
+    IonSpinner,
+    ShowImageComponent
   ],
 })
 export class CreateMessage implements OnInit {
   private data = inject(DataService);
   private modalCtrl = inject(ModalController);
   private geminiService = inject(GeminiService);
+  private storageService = inject(StorageService);
+  private loadingController = inject(LoadingController);
 
   nameOrEmail: string = '';
   messageForm!: FormGroup;
@@ -85,6 +91,7 @@ export class CreateMessage implements OnInit {
     subject: false,
     message: false,
   };
+  dataUrl : string = '';
 
   constructor(private fb: FormBuilder) {
     addIcons({ sendOutline, documentTextOutline });
@@ -95,6 +102,7 @@ export class CreateMessage implements OnInit {
       email: ['', Validators.required],
       subject: ['', Validators.required],
       message: ['', Validators.required],
+      imageUrl: ['']
     });
   }
 
@@ -133,6 +141,7 @@ export class CreateMessage implements OnInit {
     this.submitted = true;
 
     if (this.messageForm.invalid) return;
+    if (this.dataUrl) this.messageForm.value.imageUrl = this.dataUrl;
 
     console.log(this.userSelected);
     this.data.sendMessage(this.userSelected!, this.messageForm.value);
@@ -143,6 +152,7 @@ export class CreateMessage implements OnInit {
     this.messageForm.reset();
     this.submitted = false;
     this.nameOrEmail = '';
+    this.dataUrl = '';
   }
 
   async enchantMessage() {
@@ -171,11 +181,29 @@ export class CreateMessage implements OnInit {
   }
 
   async takePhoto() {
+
+    const loadModal = await this.loadingController.create({
+      message: 'Upload Image...'
+    });
+
     const image = await Camera.getPhoto({
       quality: 60,
       allowEditing: false,
       resultType: CameraResultType.DataUrl
     })
-    console.log(image);
+
+    loadModal.present();
+
+    try {
+      this.dataUrl = await this.storageService.uploadBase64Image(image.dataUrl!);
+    } catch (error) {
+      console.log('Error al guardar la imagen...', error)
+    } finally {
+      loadModal.dismiss();
+    }
+
+    console.log('Foto guardada en: ', this.dataUrl)
   }
+
 }
+

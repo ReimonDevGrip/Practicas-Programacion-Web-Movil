@@ -16,7 +16,7 @@ import { User } from '../models/users.model';
 @Component({
   selector: 'modal',
   templateUrl: 'modal.component.html',
-  imports: [FormsModule, IonButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, SearchComponent],
+  imports: [FormsModule, IonButton, IonButtons, IonContent, IonHeader, IonToolbar, SearchComponent],
 })
 export class ModalComponent {
   userSelect: User | undefined = undefined;

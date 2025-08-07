@@ -78,6 +78,7 @@ export class HomePage implements OnInit {
           text: 'YES',
           handler: () => {
             this.router.navigate(['/login']);
+            this.loginService.logout();
           }
         }
       ]

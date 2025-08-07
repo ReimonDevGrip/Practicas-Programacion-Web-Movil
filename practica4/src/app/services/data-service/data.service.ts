@@ -86,6 +86,7 @@ export class DataService {
       subject: message.subject,
       date: message.date,
       message: message.message,
+      imageUrl: message.imageUrl,
       read: false
     }).then(() => {
       alert('Mensaje Enviado')

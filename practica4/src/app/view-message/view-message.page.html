@@ -27,6 +27,9 @@
         <h3>To: <ion-note>Me</ion-note></h3>
       </ion-label>
     </ion-item>
+    @if ('imageUrl' in message()! && message()!.imageUrl != null && message()!.imageUrl != '' && message()!.imageUrl != undefined) {
+      <show-image [imageUrl]="message()!.imageUrl"/>
+    }
     <div class="ion-padding">
       <h1>{{ message()!.subject }}</h1>
       <p>

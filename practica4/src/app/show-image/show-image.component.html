@@ -1,0 +1,10 @@
+<ion-chip
+  
+  (click)="viewImage()" >
+  
+  <ion-icon name="image-outline" ></ion-icon>
+  <ion-label>Imagen</ion-label>
+  @if (withClose) {
+    <ion-icon name="close-circle" (click)="removeImage()"></ion-icon>
+  }
+</ion-chip>

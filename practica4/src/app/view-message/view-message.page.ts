@@ -5,12 +5,13 @@ import { Platform, IonHeader, IonToolbar, IonButtons, IonBackButton, IonContent,
 import { addIcons } from 'ionicons';
 import { personCircle } from 'ionicons/icons';
 import { DataService } from '../services/data-service/data.service';
+import { ShowImageComponent } from '../show-image/show-image.component';
 
 @Component({
   selector: 'app-view-message',
   templateUrl: './view-message.page.html',
   styleUrls: ['./view-message.page.scss'],
-  imports: [IonHeader, IonToolbar, IonButtons, IonBackButton, IonContent, IonItem, IonIcon, IonLabel, IonNote],
+  imports: [IonHeader, IonToolbar, IonButtons, IonBackButton, IonContent, IonItem, IonIcon, IonLabel, IonNote, ShowImageComponent],
 })
 export class ViewMessagePage implements OnInit {
   // public message!: Message;
@@ -31,6 +32,7 @@ export class ViewMessagePage implements OnInit {
           .then(() => console.log('Message Updated'))
           .catch(err => console.log('Error updating Message ', err))
       }
+      console.log(msg)
     });
   }
 
